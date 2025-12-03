@@ -13,8 +13,6 @@ import {
 } from "@/components/home/components/thunder-flash"
 
 export interface EffectTiming {
-  audioStartTime: number
-  audioDuration: number
   thunderTimes: number[]
   thunderDuration?: number
   bannerTimes: number[]
@@ -27,8 +25,6 @@ interface PaisanosEffectProps {
 }
 
 const DEFAULT_TIMING: EffectTiming = {
-  audioStartTime: 26,
-  audioDuration: 16500,
   thunderTimes: [3500, 3900, 7100, 7500, 10800, 11200, 14300, 14700],
   bannerTimes: [3900, 7500, 11200, 14700],
 }
@@ -60,8 +56,6 @@ export function PaisanosEffect({
     audioRef.current = audio
 
     audio.addEventListener("loadedmetadata", () => {
-      audio.currentTime = timing.audioStartTime
-
       // Los efectos visuales, solo cuando el audio esta disponible
       timing.thunderTimes.forEach((thunderTime, index) => {
         const thunderId = trigger * 1000 + index
@@ -110,14 +104,6 @@ export function PaisanosEffect({
       })
     })
 
-    const stopAudioTimeout = setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current.currentTime = 0
-      }
-    }, timing.audioDuration)
-
-    timeoutRefs.current.push(stopAudioTimeout)
     audio.load()
 
     return () => {
