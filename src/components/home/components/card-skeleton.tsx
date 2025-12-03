@@ -1,7 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
-
 export function CardSkeleton({ index }: { index: number }) {
   return (
     <div
@@ -15,10 +13,10 @@ export function CardSkeleton({ index }: { index: number }) {
       >
         {index === 0 ? (
           <>
-            {/* Main card skeleton */}
+            {/* Main card  */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
-                {/* Balance label */}
+                {/* Balance  */}
                 <div className="h-4 w-16 bg-gray-300 rounded mb-2" />
 
                 {/* Currency badge and balance */}
@@ -54,8 +52,8 @@ export function CardSkeleton({ index }: { index: number }) {
         ) : (
           <>
             {/* Side card skeleton */}
-            <div className="h-4 w-32 bg-gray-300 rounded" />
-            <div className="w-6 h-4 bg-gray-300 rounded" />
+            <div className="w-32 bg-gray-300 rounded" />
+            <div className="w-6 bg-gray-300 rounded" />
           </>
         )}
       </div>

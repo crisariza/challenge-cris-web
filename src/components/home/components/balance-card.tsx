@@ -82,13 +82,13 @@ export function BalanceCard({
       animate={{
         opacity: 1,
         y: 0,
-        height: isMainCard ? "auto" : "170px",
+        height: isMainCard ? "190px" : "170px",
       }}
       transition={{
         duration: 0.6,
         delay: 0.2 + index * 0.1,
         ease: "easeOut",
-        height: { duration: 0.4, ease: "easeInOut" },
+        height: { duration: 0.3, ease: "easeInOut" },
       }}
       className={`relative rounded-3xl shadow-md overflow-hidden shrink-0 w-[90%] snap-start ${cardBgClass} px-6 py-4`}
       style={{
@@ -110,7 +110,7 @@ export function BalanceCard({
       <div
         className={`relative z-10 ${!isMainCard ? "flex items-center justify-between" : ""}`}
       >
-        {isMainCard ? (
+        {isMainCard && (
           <>
             <div className="flex items-start justify-between mb-4">
               <div>
@@ -265,33 +265,6 @@ export function BalanceCard({
                   </p>
                 </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex items-center gap-2">
-              <span
-                className={`text-xs font-mono font-bold tracking-[0.2em] ${
-                  textColorClass === "text-black"
-                    ? "text-black"
-                    : textColorClass
-                }`}
-              >
-                **** **** **** {card.cardNumber}
-              </span>
-            </div>
-            <div className="w-6 h-4 flex items-center justify-center overflow-hidden">
-              <Image
-                src={
-                  card.issuer === "Visa"
-                    ? "/assets/visa-logo.svg"
-                    : "/assets/mastercard-logo.svg"
-                }
-                alt={card.issuer === "Visa" ? "Visa" : "Mastercard"}
-                width={24}
-                height={18}
-                className="object-contain"
-              />
             </div>
           </>
         )}
