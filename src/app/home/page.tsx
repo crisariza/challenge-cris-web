@@ -23,7 +23,7 @@ import { useAuth } from "@/lib/hooks/use-auth"
 import { Loading } from "@/components/ui/loading"
 
 export default function HomePage() {
-  const { isLoading: isAuthLoading } = useAuth()
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuth()
 
   const [currency, setCurrency] = useState<"USD" | "ARS">("USD")
   const [transactions, setTransactions] = useState<TransactionType[]>([])
@@ -146,6 +146,10 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+    if (isAuthLoading || !isAuthenticated) {
+      return
+    }
+
     const fetchCards = async () => {
       try {
         setIsLoadingCards(true)
@@ -169,9 +173,13 @@ export default function HomePage() {
     }
 
     fetchCards()
-  }, [])
+  }, [isAuthLoading, isAuthenticated])
 
   useEffect(() => {
+    if (isAuthLoading || !isAuthenticated) {
+      return
+    }
+
     const fetchLastMovements = async () => {
       try {
         setIsLoadingMovements(true)
@@ -197,9 +205,9 @@ export default function HomePage() {
     }
 
     fetchLastMovements()
-  }, [])
+  }, [isAuthLoading, isAuthenticated])
 
-  if (isAuthLoading) {
+  if (isAuthLoading || !isAuthenticated) {
     return <Loading />
   }
 

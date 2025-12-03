@@ -13,7 +13,7 @@ import { useAuth } from "@/lib/hooks/use-auth"
 import { Loading } from "@/components/ui/loading"
 
 export default function MovementsPage() {
-  const { isLoading: isAuthLoading } = useAuth()
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuth()
 
   const [searchQuery, setSearchQuery] = useState("")
   const [activeFilter, setActiveFilter] = useState<FilterType>("all")
@@ -54,6 +54,10 @@ export default function MovementsPage() {
   const filteredTransactions = getFilteredTransactions()
 
   useEffect(() => {
+    if (isAuthLoading || !isAuthenticated) {
+      return
+    }
+
     const fetchMovements = async () => {
       try {
         setIsLoadingMovements(true)
@@ -80,9 +84,9 @@ export default function MovementsPage() {
     }
 
     fetchMovements()
-  }, [activeFilter])
+  }, [activeFilter, isAuthLoading, isAuthenticated])
 
-  if (isAuthLoading) {
+  if (isAuthLoading || !isAuthenticated) {
     return <Loading />
   }
 

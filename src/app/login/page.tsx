@@ -13,21 +13,12 @@ import { Label } from "@/components/ui/label"
 import { Loading } from "@/components/ui/loading"
 import { apiClient } from "@/lib/api/client"
 import { useAuthContext } from "@/lib/contexts/auth-context"
-import { storage } from "@/lib/storage"
+import { useAuth } from "@/lib/hooks/use-auth"
 
 export default function LoginPage() {
   const router = useRouter()
   const { setAuth } = useAuthContext()
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
-
-  useEffect(() => {
-    const token = storage.getToken()
-    if (token) {
-      router.push("/home")
-    } else {
-      setIsCheckingAuth(false)
-    }
-  }, [router])
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
@@ -38,6 +29,12 @@ export default function LoginPage() {
     password?: string
     general?: string
   }>({})
+
+  useEffect(() => {
+    if (!isAuthLoading && isAuthenticated) {
+      router.push("/home")
+    }
+  }, [isAuthLoading, isAuthenticated, router])
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {}
@@ -111,7 +108,7 @@ export default function LoginPage() {
     button: { delay: 1.2, duration: 0.3 },
   }
 
-  if (isCheckingAuth) {
+  if (isAuthLoading || isAuthenticated) {
     return <Loading />
   }
 

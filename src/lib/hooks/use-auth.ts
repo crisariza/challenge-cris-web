@@ -12,12 +12,13 @@ export function useAuth() {
     const token = storage.getToken()
 
     if (!token) {
-      router.push("/login")
       setIsAuthenticated(false)
+      setIsLoading(false)
+      router.push("/login")
     } else {
       setIsAuthenticated(true)
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [router])
 
   return { isAuthenticated, isLoading }
