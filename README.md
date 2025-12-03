@@ -4,7 +4,7 @@ Aplicación web frontend desarrollada con Next.js para el challenge de PaisaBank
 
 ## Requisitos Previos
 
-- **Node.js**: Versión 22.x
+- **Node.js**: Versión 24.x
 - **npm**: Versión 11.x
 - **Back-end**: Asegurarse que este funcionando y con datos
 
