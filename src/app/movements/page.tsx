@@ -10,9 +10,10 @@ import { type Transaction as TransactionType } from "@/components/transaction"
 import TransactionsList from "@/components/transactions-list"
 import { apiClient } from "@/lib/api/client"
 import { useAuth } from "@/lib/hooks/use-auth"
+import { Loading } from "@/components/ui/loading"
 
 export default function MovementsPage() {
-  useAuth()
+  const { isLoading: isAuthLoading } = useAuth()
 
   const [searchQuery, setSearchQuery] = useState("")
   const [activeFilter, setActiveFilter] = useState<FilterType>("all")
@@ -80,6 +81,10 @@ export default function MovementsPage() {
 
     fetchMovements()
   }, [activeFilter])
+
+  if (isAuthLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="min-h-screen bg-daybg pt-8 pb-24">

@@ -3,19 +3,31 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader2, CheckCircle2 } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Header } from "@/components/login/header"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Loading } from "@/components/ui/loading"
 import { apiClient } from "@/lib/api/client"
 import { useAuthContext } from "@/lib/contexts/auth-context"
+import { storage } from "@/lib/storage"
 
 export default function LoginPage() {
   const router = useRouter()
   const { setAuth } = useAuthContext()
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
+
+  useEffect(() => {
+    const token = storage.getToken()
+    if (token) {
+      router.push("/home")
+    } else {
+      setIsCheckingAuth(false)
+    }
+  }, [router])
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
@@ -97,6 +109,10 @@ export default function LoginPage() {
     passwordField: { delay: 0.8, duration: 0.3 },
     checkbox: { delay: 1.0, duration: 0.3 },
     button: { delay: 1.2, duration: 0.3 },
+  }
+
+  if (isCheckingAuth) {
+    return <Loading />
   }
 
   return (

@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     persistent: boolean
   ) => {
     storage.setToken(newToken, persistent)
-    storage.setUserName(newUserName)
+    storage.setUserName(newUserName, persistent)
     setToken(newToken)
     setUserName(newUserName)
   }

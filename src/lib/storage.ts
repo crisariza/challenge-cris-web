@@ -31,15 +31,24 @@ export const storage = {
     }
   },
 
-  setUserName: (name: string): void => {
+  setUserName: (name: string, persistent: boolean = true): void => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(USER_NAME_KEY, name)
+      if (persistent) {
+        localStorage.setItem(USER_NAME_KEY, name)
+        sessionStorage.removeItem(USER_NAME_KEY)
+      } else {
+        sessionStorage.setItem(USER_NAME_KEY, name)
+        localStorage.removeItem(USER_NAME_KEY)
+      }
     }
   },
 
   getUserName: (): string | null => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem(USER_NAME_KEY)
+      return (
+        localStorage.getItem(USER_NAME_KEY) ||
+        sessionStorage.getItem(USER_NAME_KEY)
+      )
     }
     return null
   },
@@ -47,6 +56,7 @@ export const storage = {
   removeUserName: (): void => {
     if (typeof window !== "undefined") {
       localStorage.removeItem(USER_NAME_KEY)
+      sessionStorage.removeItem(USER_NAME_KEY)
     }
   },
 
@@ -55,6 +65,7 @@ export const storage = {
       localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(USER_NAME_KEY)
       sessionStorage.removeItem(TOKEN_KEY)
+      sessionStorage.removeItem(USER_NAME_KEY)
     }
   },
 }

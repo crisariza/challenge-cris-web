@@ -20,9 +20,10 @@ import { type Transaction as TransactionType } from "@/components/transaction"
 import TransactionsList from "@/components/transactions-list"
 import { apiClient } from "@/lib/api/client"
 import { useAuth } from "@/lib/hooks/use-auth"
+import { Loading } from "@/components/ui/loading"
 
 export default function HomePage() {
-  useAuth()
+  const { isLoading: isAuthLoading } = useAuth()
 
   const [currency, setCurrency] = useState<"USD" | "ARS">("USD")
   const [transactions, setTransactions] = useState<TransactionType[]>([])
@@ -197,6 +198,10 @@ export default function HomePage() {
 
     fetchLastMovements()
   }, [])
+
+  if (isAuthLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="min-h-screen bg-daybg pt-8 pb-18">

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
+import { Loading } from "@/components/ui/loading"
 import { storage } from "@/lib/storage"
 
 export default function RootPage() {
@@ -20,6 +21,5 @@ export default function RootPage() {
     }
   }, [router])
 
-  // Show nothing while redirecting
-  return null
+  return <Loading />
 }
