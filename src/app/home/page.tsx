@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 
 import BottomNavigation from "@/components/bottom-navigation"
 import { BalanceCard } from "@/components/home/components/balance-card"
+import { CardSkeleton } from "@/components/home/components/card-skeleton"
 import { Confetti } from "@/components/home/components/confetti"
 import { Header } from "@/components/home/components/header"
 import { PaisanosEffect } from "@/components/home/components/paisanos-effect"
@@ -88,7 +89,13 @@ export default function HomePage() {
 
   const renderCardsCarousel = () => {
     if (isLoadingCards) {
-      return null
+      return (
+        <div className="p-2 flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory scroll-momentum items-center">
+          {[0, 1].map((index) => (
+            <CardSkeleton key={index} index={index} />
+          ))}
+        </div>
+      )
     }
 
     if (cardsError || cards.length === 0) {
