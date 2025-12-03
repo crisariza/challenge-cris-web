@@ -29,8 +29,8 @@ interface PaisanosEffectProps {
 const DEFAULT_TIMING: EffectTiming = {
   audioStartTime: 26,
   audioDuration: 16500,
-  thunderTimes: [3500, 3900, 7100, 7500, 10800, 11100, 14300, 14700],
-  bannerTimes: [3900, 7500, 11100, 14700],
+  thunderTimes: [3500, 3900, 7100, 7500, 10800, 11200, 14300, 14700],
+  bannerTimes: [3900, 7500, 11200, 14700],
 }
 
 export function PaisanosEffect({
