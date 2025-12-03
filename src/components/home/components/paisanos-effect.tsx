@@ -55,8 +55,8 @@ export function PaisanosEffect({
     audio.volume = 0.5
     audioRef.current = audio
 
-    audio.addEventListener("loadedmetadata", () => {
-      // Los efectos visuales, solo cuando el audio esta disponible
+    const scheduleEffects = () => {
+      // Los efectos visuales, solo cuando el audio esta disponible y reproduciéndose
       timing.thunderTimes.forEach((thunderTime, index) => {
         const thunderId = trigger * 1000 + index
 
@@ -98,10 +98,17 @@ export function PaisanosEffect({
 
         timeoutRefs.current.push(bannerTimeout)
       })
+    }
 
-      audio.play().catch((error) => {
-        return error
-      })
+    audio.addEventListener("loadedmetadata", () => {
+      audio
+        .play()
+        .then(() => {
+          scheduleEffects()
+        })
+        .catch((error) => {
+          console.error("Error playing audio:", error)
+        })
     })
 
     audio.load()
