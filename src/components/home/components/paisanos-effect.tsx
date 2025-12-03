@@ -59,50 +59,52 @@ export function PaisanosEffect({
     audio.volume = 0.5
     audioRef.current = audio
 
-    timing.thunderTimes.forEach((thunderTime, index) => {
-      const thunderId = trigger * 1000 + index
-
-      const thunderTimeout = setTimeout(() => {
-        setActiveThunders((prev) => new Set(prev).add(thunderId))
-
-        // Limpiar trueno
-        const removeThunderTimeout = setTimeout(() => {
-          setActiveThunders((prev) => {
-            const next = new Set(prev)
-            next.delete(thunderId)
-            return next
-          })
-        }, timing.thunderDuration ?? THUNDER_DURATION)
-
-        timeoutRefs.current.push(removeThunderTimeout)
-      }, thunderTime)
-
-      timeoutRefs.current.push(thunderTimeout)
-    })
-
-    timing.bannerTimes.forEach((bannerTime, index) => {
-      const bannerId = trigger * 1000 + index
-
-      const bannerTimeout = setTimeout(() => {
-        setActiveBanners((prev) => new Set(prev).add(bannerId))
-
-        // Limpiar banner de Paisanos
-        const removeBannerTimeout = setTimeout(() => {
-          setActiveBanners((prev) => {
-            const next = new Set(prev)
-            next.delete(bannerId)
-            return next
-          })
-        }, timing.bannerDuration ?? BANNER_DURATION)
-
-        timeoutRefs.current.push(removeBannerTimeout)
-      }, bannerTime)
-
-      timeoutRefs.current.push(bannerTimeout)
-    })
-
     audio.addEventListener("loadedmetadata", () => {
       audio.currentTime = timing.audioStartTime
+
+      // Los efectos visuales, solo cuando el audio esta disponible
+      timing.thunderTimes.forEach((thunderTime, index) => {
+        const thunderId = trigger * 1000 + index
+
+        const thunderTimeout = setTimeout(() => {
+          setActiveThunders((prev) => new Set(prev).add(thunderId))
+
+          // Limpiar trueno
+          const removeThunderTimeout = setTimeout(() => {
+            setActiveThunders((prev) => {
+              const next = new Set(prev)
+              next.delete(thunderId)
+              return next
+            })
+          }, timing.thunderDuration ?? THUNDER_DURATION)
+
+          timeoutRefs.current.push(removeThunderTimeout)
+        }, thunderTime)
+
+        timeoutRefs.current.push(thunderTimeout)
+      })
+
+      timing.bannerTimes.forEach((bannerTime, index) => {
+        const bannerId = trigger * 1000 + index
+
+        const bannerTimeout = setTimeout(() => {
+          setActiveBanners((prev) => new Set(prev).add(bannerId))
+
+          // Limpiar banner de Paisanos
+          const removeBannerTimeout = setTimeout(() => {
+            setActiveBanners((prev) => {
+              const next = new Set(prev)
+              next.delete(bannerId)
+              return next
+            })
+          }, timing.bannerDuration ?? BANNER_DURATION)
+
+          timeoutRefs.current.push(removeBannerTimeout)
+        }, bannerTime)
+
+        timeoutRefs.current.push(bannerTimeout)
+      })
+
       audio.play().catch((error) => {
         return error
       })
