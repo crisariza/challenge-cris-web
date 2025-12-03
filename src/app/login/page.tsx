@@ -127,7 +127,7 @@ export default function LoginPage() {
             ease: "easeOut",
           }}
           onSubmit={handleSubmit}
-          className="space-y-48"
+          className="space-y-16 sm:space-y-24 md:space-y-48"
         >
           <div className="space-y-6">
             {/* Email  */}
