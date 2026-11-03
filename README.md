@@ -5,14 +5,16 @@ Aplicación web frontend desarrollada con Next.js para el challenge de PaisaBank
 ## Requisitos Previos
 
 - **Node.js**: Versión 24.x
-- **npm**: Versión 11.x
+- **pnpm**: Versión 12.x (fijada en `packageManager`)
 - **Back-end**: Asegurarse que este funcionando y con datos
 
 1. Instalar las dependencias:
 
 ```bash
-npm install
+pnpm install
 ```
+
+Este repo usa **pnpm** (versión fijada en `packageManager`); `npm install` está bloqueado por el `preinstall`.
 
 ## Configuración
 
@@ -29,7 +31,7 @@ Esta realizado con next_public para simplificar los archivos client, en producci
 ### Dev
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ### Prod
@@ -37,27 +39,27 @@ npm run dev
 1. Compilar
 
 ```bash
-npm run build
+pnpm build
 ```
 
 2. Correr el server
 
 ```bash
-npm start
+pnpm start
 ```
 
 3. Información útil
 
 ### Scripts
 
-- `npm run dev`
-- `npm run build`
-- `npm start`
-- `npm run lint`
-- `npm run lint:fix`
-- `npm run format`
-- `npm run format:check`
-- `npm run type-check`
+- `pnpm dev`
+- `pnpm build`
+- `pnpm start`
+- `pnpm lint`
+- `pnpm lint:fix`
+- `pnpm format`
+- `pnpm format:check`
+- `pnpm type-check`
 
 ## Estructura del Proyecto
 
